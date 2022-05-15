@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph3"
+    app:startDestination="@id/Home3Fragment">
+
+    <fragment
+        android:id="@+id/Home3Fragment"
+        android:name="elfak.mosis.myplaces.First3Fragment"
+        android:label="@string/home_fragment_label"
+        tools:layout="@layout/fragment_home3">
+
+        <action
+            android:id="@+id/action_Home3Fragment_to_List3Fragment"
+            app:destination="@id/List3Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/List3Fragment"
+        android:name="elfak.mosis.myplaces.List3Fragment"
+        android:label="@string/list_fragment_label"
+        tools:layout="@layout/fragment_list3">
+
+        <action
+            android:id="@+id/action_List3Fragment_to_Home3Fragment"
+            app:destination="@id/Home3Fragment" />
+    </fragment>
+</navigation>
