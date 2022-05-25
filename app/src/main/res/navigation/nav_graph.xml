@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_ListFragment_to_EditFragment"
             app:destination="@id/EditFragment" />
+        <action
+            android:id="@+id/action_ListFragment_to_viewFragment"
+            app:destination="@id/viewFragment" />
     </fragment>
     <fragment
         android:id="@+id/EditFragment"
@@ -43,5 +46,17 @@
         <action
             android:id="@+id/action_EditFragment_to_ListFragment"
             app:destination="@id/ListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewFragment"
+        android:name="elfak.mosis.myplaces.ViewFragment"
+        android:label="View My Places"
+        tools:layout="@layout/fragment_view">
+        <action
+            android:id="@+id/action_viewFragment_to_ListFragment"
+            app:destination="@id/ListFragment" />
+        <action
+            android:id="@+id/action_viewFragment_to_EditFragment"
+            app:destination="@id/EditFragment" />
     </fragment>
 </navigation>

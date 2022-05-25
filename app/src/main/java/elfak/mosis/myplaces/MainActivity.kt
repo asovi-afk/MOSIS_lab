@@ -11,13 +11,17 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation.findNavController
 import elfak.mosis.myplaces.databinding.ActivityMainBinding
+import elfak.mosis.myplaces.elfak.mosis.myplaces.model.MyPlacesViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private val myPlacesViewModel: MyPlacesViewModel by viewModels() // Korak 8
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +31,35 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+
+
+        navController.addOnDestinationChangedListener{ controller, destination, arguments ->
+            if(destination.id == R.id.EditFragment || destination.id == R.id.viewFragment)
+                binding.fab.hide()
+            else
+                binding.fab.show()
+
+            // Korak 8
+            if(destination.id == R.id.EditFragment)
+                if(myPlacesViewModel.selected != null){
+                    controller.graph.findNode(R.id.EditFragment)?.label = getString(R.string.eddit_my_place_label)
+                    Toast.makeText(this, "Za edit", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    controller.graph.findNode(R.id.EditFragment)?.label = getString(R.string.add_my_place_label)
+                    Toast.makeText(this, "Za add", Toast.LENGTH_SHORT).show()
+                }
+        }
+        setupActionBarWithNavController(navController, appBarConfiguration) // Mora posle koraka 8
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            if(navController.currentDestination?.id == R.id.HomeFragment)
+                navController.navigate(R.id.action_HomeFragment_to_EditFragment)
+            else if(navController.currentDestination?.id == R.id.ListFragment)
+                navController.navigate(R.id.action_ListFragment_to_EditFragment)
         }
     }
 
